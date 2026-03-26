@@ -1,6 +1,9 @@
 const { readFile, readFileSync } = require('fs');
+const path = require('path');
 const express = require('express');
 const app = express();
+
+app.use(express.static(__dirname));
 
 app.get('/', (request, response) => {
 	readFile('./src/views/index.html', 'utf8', (err, html) => {
