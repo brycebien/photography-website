@@ -1,4 +1,5 @@
 const { readFile, readFileSync } = require('fs');
+require('dotenv').config();
 const indexRouter = require('./routes/router.js');
 const path = require('path');
 const express = require('express');
@@ -10,7 +11,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(session({
-	secret: 'secret-key',
+	secret: process.env.SESSION_KEY,
 	resave: false,
 	saveUninitialized: true
 }));
