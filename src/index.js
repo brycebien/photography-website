@@ -23,5 +23,6 @@ app.use(express.static(__dirname));
 // ROUTES
 app.use('/', indexRouter);
 app.use('/contact', indexRouter);
+app.use('/admin', indexRouter);
 
 app.listen(process.env.PORT || 3000, () => console.log(`App available on port ${process.env.PORT || 3000}`));
