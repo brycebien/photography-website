@@ -1,4 +1,3 @@
-const { readFile, readFileSync } = require('fs');
 require('dotenv').config();
 const indexRouter = require('./routes/router.js');
 const path = require('path');
