@@ -1,5 +1,4 @@
 require('dotenv').config();
-const indexRouter = require('./routes/router.js');
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
@@ -19,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
+const indexRouter = require('./routes/router.js');
 // ROUTES
 app.use('/', indexRouter);
 app.use('/contact', indexRouter);
