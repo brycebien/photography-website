@@ -29,7 +29,7 @@ app.get('/contact', (request, response) => {
 app.post('/contact', (request, response) => {
 	const { firstName, lastName, email, message } = request.body;
 
-	console.log(message);
+	console.log(firstName);
 	response.redirect('/');
 });
 
