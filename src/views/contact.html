@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NorthLage Rustics</title>
+		<nav class="flex justify-between items-center p-5 max-w-7xl mx-auto">
+			<a href="/" class="flex items-center gap-2">
+				<!-- <img src="/logo.png" alt="NorthLage Rustics Logo" class="h-10 w-auto"> -->
+				<placeholder>placeholder<br>for<br>img</placeholder>
+				<span class="font-bold text-xl tracking-tight text-heading">NorthLage<br>Rustics</span>
+			</a>
+			<ul class="hidden md:flex space-x-8 list-none">
+				<li><a href="/who-i-am" class="hover:text-bold transition-colors">Who I Am</a></li>
+				<li><a href="/what-i-do" class="hover:text-bold transition-colors">What I Do</a></li>
+				<li><a href="/my-work" class="hover:text-bold transition-colors">My Work</a></li>
+				<li><a href="/contact" class="hover:text-bold transition-colors">Contact Me</a></li>
+			</ul>
+		</nav>
+		<link href="/output.css" rel="stylesheet">
+	</head>
+	<body class="m-4">
+		<div class="min-h-screen flex items-center justify-center bg-neutral-50 px-4 py-12">
+			<div class="w-full max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-sm">
+				<h2 class="text-2xl font-bold mb-6 text-heading text-center">Contact Me</h2>
+				<form method="POST" action="/contact">
+					<div class="grid gap-6 mb-6 md:grid-cols-2">
+						<div>
+							<label for="first_name" class="block mb-2.5 text-sm font-medium text-heading">First name</label>
+							<input type="text" name="firstName" id="first_name" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="John" required />
+						</div>
+						<div>
+							<label for="last_name" class="block mb-2.5 text-sm font-medium text-heading">Last name</label>
+							<input type="text" name="lastName" id="last_name" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Doe" required />
+						</div>
+					</div>
+					<div class="mb-6">
+						<label for="email" class="block mb-2.5 text-sm font-medium text-heading">Email address</label>
+						<input type="email" name="email" id="email" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="john.doe@company.com" required />
+					</div> 
+					<div class="mb-6">
+						<label for="message" class="block mb-2.5 text-sm font-medium text-heading">Message</label>
+						<textarea name="message" id="message" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="message" required></textarea>
+					</div> 
+					<button type="submit" class="text-black bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Submit</button>
+				</form>
+			</div>
+		</div>
+
+	</body>
+</html>
