@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 
 app.use(express.static(__dirname));
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (request, response) => {
 	readFile('./src/views/index.html', 'utf8', (err, html) => {
@@ -23,6 +24,13 @@ app.get('/contact', (request, response) => {
 
 		response.send(html);
 	})
+})
+
+app.post('/contact', (request, response) => {
+	const { firstName, lastName, email, message } = request.body;
+
+	console.log(message);
+	response.redirect('/');
 })
 
 app.listen(process.env.PORT || 3000, () => console.log(`App available on port ${process.env.PORT || 3000}`));
