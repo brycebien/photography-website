@@ -23,6 +23,8 @@ app.use(express.static(__dirname));
 // ROUTES
 app.use('/', indexRouter);
 app.use('/contact', indexRouter);
+app.use('/what-i-do', indexRouter);
+
 
 app.get('/what-i-do', (request, response) => {
 	readFile('./src/views/whatDo.html', 'utf8', (err, html) => {

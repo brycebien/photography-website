@@ -21,4 +21,8 @@ router.post('/contact', (req, res) => {
 	res.redirect('/');
 });
 
+router.get('/what-i-do', (req, res) => {
+	res.render('whatDo');
+});
+
 module.exports = router;
