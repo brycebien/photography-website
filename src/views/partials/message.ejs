@@ -1,0 +1,5 @@
+<% if (locals.message) { %>
+	<div class="p-4 mb-4 flex justify-center rounded-lg border <%= isSuccess ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200' %>">
+		<p><%= message %></p>
+	</div>
+<% } %>
