@@ -1,19 +1,28 @@
 const { readFile, readFileSync } = require('fs');
+require('dotenv').config();
+const indexRouter = require('./routes/router.js');
 const path = require('path');
 const express = require('express');
+const session = require('express-session');
+const flash = require('connect-flash');
 const app = express();
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(session({
+	secret: process.env.SESSION_KEY,
+	resave: false,
+	saveUninitialized: true
+}));
+app.use(flash());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
-app.get('/', (request, response) => {
-	readFile('./src/views/index.html', 'utf8', (err, html) => {
-		if (err) {
-			response.status(500).send(`An error occured: ${err}`);
-		}
-
-		response.send(html);
-	});
-});
+// ROUTES
+app.use('/', indexRouter);
+app.use('/contact', indexRouter);
 
 app.get('/what-i-do', (request, response) => {
 	readFile('./src/views/whatDo.html', 'utf8', (err, html) => {

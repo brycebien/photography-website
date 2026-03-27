@@ -1,13 +1,19 @@
 @import "tailwindcss";
 
 @layer base {
-  h1 {
-    @apply text-4xl font-bold mb-4;
-  }
-  h2 {
-    @apply text-2xl font-semibold mb-2;
-  }
-  h3 {
-    @apply text-xl font-medium;
-  }
+	h1 {
+	@apply text-4xl font-bold mb-4;
+	}
+	h2 {
+	@apply text-2xl font-semibold mb-2;
+	}
+	h3 {
+	@apply text-xl font-medium;
+	}
+}
+
+@theme {
+	--color-brand: #171717; 
+	--color-brand-strong: #000000; 
+	--color-brand-medium: #e5e5e5; 
 }
