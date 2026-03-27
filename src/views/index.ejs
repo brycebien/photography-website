@@ -1,0 +1,13 @@
+<%- include('partials/header') -%>
+
+	<body class="m-4">
+		<div class="min-h-screen bg-neutral-50 px-4 py-12">
+			<% if (locals.message) { %>
+				<div class="p-4 mb-4 flex justify-center rounded-lg border <%= isSuccess ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200' %>">
+					<p><%= message %></p>
+				</div>
+			<% } %>
+			<h1>Home Page!!</h1>
+		</div>
+	</body>
+</html>

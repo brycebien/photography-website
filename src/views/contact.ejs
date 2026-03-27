@@ -1,0 +1,32 @@
+<%- include('partials/header') -%>
+
+	<body class="m-4">
+		<div class="min-h-screen flex items-center justify-center bg-neutral-50 px-4 py-12">
+			<div class="w-full max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-sm">
+				<h2 class="text-2xl font-bold mb-6 text-heading text-center">Contact Me</h2>
+				<form method="POST" action="/contact">
+					<div class="grid gap-6 mb-6 md:grid-cols-2">
+						<div>
+							<label for="firstName" class="block mb-2.5 text-sm font-medium text-heading">First name</label>
+							<input type="text" name="firstName" id="firstName" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="John" required />
+						</div>
+						<div>
+							<label for="lastName" class="block mb-2.5 text-sm font-medium text-heading">Last name</label>
+							<input type="text" name="lastName" id="lastName" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Doe" required />
+						</div>
+					</div>
+					<div class="mb-6">
+						<label for="email" class="block mb-2.5 text-sm font-medium text-heading">Email address</label>
+						<input type="email" name="email" id="email" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="john.doe@company.com" required />
+					</div> 
+					<div class="mb-6">
+						<label for="message" class="block mb-2.5 text-sm font-medium text-heading">Message</label>
+						<textarea name="message" id="message" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="message" required></textarea>
+					</div> 
+					<button type="submit" class="text-black bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Submit</button>
+				</form>
+			</div>
+		</div>
+
+	</body>
+</html>
