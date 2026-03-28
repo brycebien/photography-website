@@ -1,13 +1,20 @@
+const { initializeApp, cert } = require('firebase-admin/app');
+const { getAuth } = require('firebase-admin/auth');
+const { getFirestore } = require('firebase-admin/firestore');
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const admin = require('firebase-admin');
 const serviceAccount = require("../serviceAccountKey.json");
+const bcrypt = require('bcrypt');
 
-admin.initializeApp({
-	credential: admin.credential.cert(serviceAccount),
-	projectId: 'photography-website-51c00',
-});
+if (!getAuth.app) {
+	initializeApp({
+		credential: cert(serviceAccount)
+	});
+}
+
+const auth = getAuth();
+const db = getFirestore();
 
 router.get('/', (req, res) => {
 	const successMsg = req.flash('success')[0];
@@ -29,50 +36,79 @@ router.post('/contact', (req, res) => {
 	res.redirect('/');
 });
 
-async function checkAuthStatus(req, res, next) {
-    const authHeader = req.headers.authorization;
-    req.user = null; // Initialize req.user to null by default
+router.get('/admin/signUp', (req, res) => {
+	res.render('admin/adminSignUp');
+});
 
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-        const idToken = authHeader.split('Bearer ')[1];
-        try {
-            const decodedToken = await admin.auth().verifyIdToken(idToken);
-            req.user = decodedToken; // User is authenticated, attach decoded token
-        } catch (error) {
-            console.warn('Firebase ID token verification failed:', error.message);
-            // If verification fails, req.user remains null.
-            // We don't send a response here, just let it proceed to the route handler.
-        }
-    }
-    next(); // Always call next(), regardless of authentication success or failure
-}
-
-router.get('/admin', checkAuthStatus, (req, res) => {
-	console.log(req.user);
-	if (req.user) {
-		if (req.user.admin) {
-				// res.send(500);
-				res.render('admin');
-		} else {
-				// User is authenticated but not an admin, render sign-in page with a message
-				res.render('adminSignIn', { message: 'You are signed in but do not have administrator privileges.' });
-		}
+router.get('/admin', (req, res) => {
+	if (req.session.userId) {
+		res.redirect('/admin/dashboard');
 	} else {
-		// User is not authenticated, render sign-in page
-		// Make sure process.env variables are available here (loaded in index.js)
-
-		const clientFirebaseConfig = {
-			apiKey: process.env.FIREBASE_API,
-			authDomain: process.env.FIREBASE_DOMAIN || "photography-website-51c00.firebaseapp.com",
-			projectId: process.env.FIREBASE_PROJ_ID || "photography-website-51c00",
-			storageBucket: process.env.FIREBASE_STORAGE_BUCKET || "photography-website-51c00.appspot.com",
-			messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || "311826914178",
-			appId: process.env.FIREBASE_APP_ID,
-		};
-
-		res.render('adminSignIn', {
-			firebaseConfig: clientFirebaseConfig
+		const successMsg = req.flash('success')[0];
+		const errorMsg = req.flash('error')[0];
+		res.render('admin/adminSignIn', {
+			message: successMsg || errorMsg || null,
+			isSuccess: !!successMsg
 		});
+	}
+});
+
+router.post('/admin/signUp', async (req, res) => {
+	const { email, password } = req.body;
+	try {
+		const userRecord = await auth.createUser({
+			email: email,
+			password: password
+		});
+		const hashedPassword = await bcrypt.hash(password, 10);
+		await db.collection('users').doc(userRecord.uid).set({
+			email: email,
+			passwordHash: hashedPassword
+		});
+		req.flash('success', 'Admin account created successfully! Please sign in.');
+		res.redirect('/admin');
+	} catch (error) {
+		req.flash('error', 'Error creating admin account: ' + error.message);
+		res.redirect('/');
+	}
+});
+
+router.post('/admin/signIn', async (req, res) => {
+	const { email, password } = req.body;
+	try {
+		const userRecord = await auth.getUserByEmail(email);
+		const userDoc = await db.collection('users').doc(userRecord.uid).get();
+		if (!userDoc.exists) {
+			req.flash('error', 'User not found.');
+			res.redirect('/admin');
+		}
+		const userData = userDoc.data();
+		const isMatch = await bcrypt.compare(password, userData.passwordHash);
+		if (!isMatch) {
+			return res.render('admin/adminSignIn', {
+				message: 'Invalid email or password.',
+				isSuccess: false,
+			});
+		}
+		req.session.userId = userRecord.uid;
+		req.flash('success', 'Admin signed in successfully!');
+		res.redirect('/admin/dashboard');
+	} catch (error) {
+		req.flash('error', 'An unexpected error occurred: ' + error.message);
+		const errorMsg = req.flash('error')[0];
+		res.render('admin/adminSignIn', {
+			message: errorMsg,
+			isSuccess: false,
+		});
+	}
+});
+
+router.get('/admin/dashboard', (req, res) => {
+	if (!req.session.userId) {
+		req.flash('error', 'Please sign in to access the admin dashboard.');
+		res.redirect('/admin');
+	} else {
+		res.render('admin/dashboard');
 	}
 });
 

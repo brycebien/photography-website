@@ -1,0 +1,27 @@
+<%- include('../partials/header') -%>
+<%- include('../partials/message') -%>
+
+<div class="min-h-screen flex items-center justify-center bg-neutral-50 px-4 py-12">
+	<div class="w-full max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-sm">
+		<h2 class="text-2xl font-bold mb-6 text-heading text-center">Sign Up</h2>
+		<form id="signup-form" method="POST" action="/admin/signUp">
+			<div class="mb-6">
+				<div>
+					<label for="email" class="block mb-2.5 text-sm font-medium text-heading">Email</label>
+					<input type="email" name="email" id="email" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="john.doe@company.com" required />
+				</div>
+			</div>
+			<div class="mb-6">
+				<div>
+					<label for="password" class="block mb-2.5 text-sm font-medium text-heading">Password</label>
+					<input type="password" name="password" id="password" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="password" required />
+				</div>
+			</div>
+			<div class="flex justify-end">
+				<button type="submit" class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Sign Up</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<%- include('../partials/footer') -%>
