@@ -21,12 +21,15 @@ router.get('/', (req, res) => {
     const errorMsg = req.flash('error')[0];
 	res.render('index', { 
 		message: successMsg || errorMsg || null,
-		isSuccess: !!successMsg
+		isSuccess: !!successMsg,
+		user: req.session.userId ? { email: req.session.userEmail } : null,
 	});
 });
 
 router.get('/contact', (req, res) => {
-	res.render('contact');
+	res.render('contact', {
+		user: req.session.userId ? { email: req.session.userEmail } : null,
+	});
 });
 
 router.post('/contact', (req, res) => {
@@ -37,7 +40,9 @@ router.post('/contact', (req, res) => {
 });
 
 router.get('/admin/signUp', (req, res) => {
-	res.render('admin/adminSignUp');
+	res.render('admin/adminSignUp', {
+		user: req.session.userId ? { email: req.session.userEmail } : null,
+	});
 });
 
 router.get('/admin', (req, res) => {
@@ -48,7 +53,8 @@ router.get('/admin', (req, res) => {
 		const errorMsg = req.flash('error')[0];
 		res.render('admin/adminSignIn', {
 			message: successMsg || errorMsg || null,
-			isSuccess: !!successMsg
+			isSuccess: !!successMsg,
+			user: req.session.userId ? { email: req.session.userEmail } : null
 		});
 	}
 });
@@ -88,6 +94,7 @@ router.post('/admin/signIn', async (req, res) => {
 			return res.render('admin/adminSignIn', {
 				message: 'Invalid email or password.',
 				isSuccess: false,
+				user: req.session.userId ? { email: req.session.userEmail } : null
 			});
 		}
 		req.session.userId = userRecord.uid;
@@ -99,6 +106,7 @@ router.post('/admin/signIn', async (req, res) => {
 		res.render('admin/adminSignIn', {
 			message: errorMsg,
 			isSuccess: false,
+			user: req.session.userId ? { email: req.session.userEmail } : null
 		});
 	}
 });
@@ -108,7 +116,9 @@ router.get('/admin/dashboard', (req, res) => {
 		req.flash('error', 'Please sign in to access the admin dashboard.');
 		res.redirect('/admin');
 	} else {
-		res.render('admin/dashboard');
+		res.render('admin/dashboard', {
+			user: req.session.userId ? { email: req.session.userEmail } : null,
+		});
 	}
 });
 

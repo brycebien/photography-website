@@ -13,6 +13,9 @@
 				<li><a href="/what-i-do" class="hover:font-bold transition-colors">What I Do</a></li>
 				<li><a href="/my-work" class="hover:font-bold transition-colors">My Work</a></li>
 				<li><a href="/contact" class="hover:font-bold transition-colors">Contact Me</a></li>
+				<% if (user) { %>
+					<li><a href="/admin/dashboard" class="hover:font-bold transition-colors">Admin Dashboard</a></li>
+				<% } %>
 			</ul>
 		</nav>
 		<link href="/output.css" rel="stylesheet">
