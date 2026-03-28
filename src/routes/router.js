@@ -116,10 +116,22 @@ router.get('/admin/dashboard', (req, res) => {
 		req.flash('error', 'Please sign in to access the admin dashboard.');
 		res.redirect('/admin');
 	} else {
+		const successMsg = req.flash('success')[0];
+		const errorMsg = req.flash('error')[0];
 		res.render('admin/dashboard', {
 			user: req.session.userId ? { email: req.session.userEmail } : null,
+			message: successMsg || errorMsg || null,
+			isSuccess: !!successMsg
 		});
 	}
+});
+
+router.get('/admin/signOut', (req, res) => {
+	req.flash('success', 'Admin signed out successfully!');
+	if (req.session) {
+		req.session.userId = null;
+	}
+	res.redirect('/');
 });
 
 module.exports = router;
