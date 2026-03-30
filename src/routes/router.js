@@ -39,6 +39,8 @@ router.post('/contact', (req, res) => {
 	res.redirect('/');
 });
 
+
+// ADMIN ROUTES
 router.get('/admin/signUp', (req, res) => {
 	res.render('admin/adminSignUp', {
 		user: req.session.userId ? { email: req.session.userEmail } : null,
@@ -132,6 +134,22 @@ router.get('/admin/signOut', (req, res) => {
 		req.session.userId = null;
 	}
 	res.redirect('/');
+});
+
+router.get('/admin/addMedia', (req, res) => {
+	if (!req.session.userId) {
+		req.flash('error', 'Please sign in to access the admin dashboard.');
+		res.redirect('/admin');
+	} else {
+		const successMsg = req.flash('success')[0];
+		const errorMsg = req.flash('error')[0];
+
+		res.render('admin/addMedia', {
+			user: req.session.userId ? { email: req.session.userEmail } : null,
+			message: successMsg || errorMsg || null,
+			isSuccess: !!successMsg
+		});
+	}
 });
 
 module.exports = router;
